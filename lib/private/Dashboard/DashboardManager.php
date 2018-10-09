@@ -35,7 +35,7 @@ use Exception;
 use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
 use OCP\App\IAppManager;
 use OCP\Dashboard\IDashboardManager;
-use OCP\Dashboard\Model\IWidgetSettings;
+use OCP\Dashboard\Model\IWidgetConfig;
 use OCP\IServerContainer;
 
 
@@ -87,13 +87,13 @@ class DashboardManager implements IDashboardManager {
 	 * @param string $widgetId
 	 * @param string $userId
 	 *
-	 * @return IWidgetSettings
+	 * @return IWidgetConfig
 	 * @throws DashboardAppNotAvailableException
 	 */
-	public function getWidgetSettings(string $widgetId, string $userId): IWidgetSettings {
+	public function getWidgetConfig(string $widgetId, string $userId): IWidgetConfig {
 		/** @var \OCA\Dashboard\Service\WidgetsService $widgetsService */
 		$widgetsService = $this->getService('\OCA\Dashboard\Service\WidgetsService');
-		return $widgetsService->getWidgetSettings($widgetId, $userId);
+		return $widgetsService->getWidgetConfig($widgetId, $userId);
 	}
 
 

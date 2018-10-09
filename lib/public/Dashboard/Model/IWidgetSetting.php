@@ -33,97 +33,100 @@ namespace OCP\Dashboard\Model;
 /**
  * @since 15.0.0
  *
- * Interface IWidgetSettings
+ * Interface IWidgetSetting
  *
  * @package OCP\Dashboard\Model
  */
-interface IWidgetSettings {
+interface IWidgetSetting {
+
+
+	const TYPE_INPUT = 'input';
+	const TYPE_CHECKBOX = 'checkbox';
+
 
 	/**
 	 * @since 15.0.0
 	 *
-	 * IWidgetSettings constructor.
+	 * @param string $name
 	 *
-	 * @param string $userId
-	 * @param string $widgetId
+	 * @return IWidgetSetting
 	 */
-	public function __construct(string $widgetId, string $userId);
-
-	/**
-	 * @since 15.0.0
-	 *
-	 * @return string
-	 */
-	public function getUserId(): string;
-
-	/**
-	 * @since 15.0.0
-	 *
-	 * @param string $userId
-	 *
-	 * @return $this
-	 */
-	public function setUserId(string $userId): IWidgetSettings;
+	public function setName(string $name): IWidgetSetting;
 
 	/**
 	 * @since 15.0.0
 	 *
 	 * @return string
 	 */
-	public function getWidgetId(): string;
+	public function getName(): string;
 
-	/**
-	 * @param string $widgetId
-	 *
-	 * @return $this
-	 */
-	public function setWidgetId(string $widgetId): IWidgetSettings;
 
 	/**
 	 * @since 15.0.0
 	 *
-	 * @return array
+	 * @param string $title
+	 *
+	 * @return IWidgetSetting
 	 */
-	public function getPosition(): array;
+	public function setTitle(string $title): IWidgetSetting;
 
 	/**
 	 * @since 15.0.0
 	 *
-	 * @param array $position
-	 *
-	 * @return $this
+	 * @return string
 	 */
-	public function setPosition(array $position): IWidgetSettings;
+	public function getTitle(): string;
+
 
 	/**
 	 * @since 15.0.0
 	 *
-	 * @return array
-	 */
-	public function getSettings(): array;
-
-	/**
-	 * @param array $settings
+	 * @param string $type
 	 *
-	 * @return $this
+	 * @return IWidgetSetting
 	 */
-	public function setSettings(array $settings): IWidgetSettings;
+	public function setType(string $type): IWidgetSetting;
 
 	/**
 	 * @since 15.0.0
 	 *
-	 * @return bool
+	 * @return string
 	 */
-	public function isEnabled(): bool;
+	public function getType(): string;
+
 
 	/**
 	 * @since 15.0.0
 	 *
-	 * @param bool $enabled
+	 * @param string $text
 	 *
-	 * @return $this
+	 * @return IWidgetSetting
 	 */
-	public function setEnabled(bool $enabled): IWidgetSettings;
+	public function setPlaceholder(string $text): IWidgetSetting;
+
+	/**
+	 * @since 15.0.0
+	 *
+	 * @return string
+	 */
+	public function getPlaceholder(): string;
+
+
+	/**
+	 * @since 15.0.0
+	 *
+	 * @param string $value
+	 *
+	 * @return IWidgetSetting
+	 */
+	public function setDefault(string $value): IWidgetSetting;
+
+	/**
+	 * @since 15.0.0
+	 *
+	 * @return string
+	 */
+	public function getDefault(): string;
 
 }
 

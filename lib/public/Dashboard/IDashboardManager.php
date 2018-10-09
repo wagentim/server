@@ -32,7 +32,7 @@ namespace OCP\Dashboard;
 
 
 use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
-use OCP\Dashboard\Model\IWidgetSettings;
+use OCP\Dashboard\Model\IWidgetConfig;
 
 /**
  * @since 15.0.0
@@ -44,7 +44,7 @@ use OCP\Dashboard\Model\IWidgetSettings;
 interface IDashboardManager {
 
 	/**
-	 * returns IWidgetSettings for a widgetId and userId.
+	 * returns IWidgetConfig for a widgetId and userId.
 	 *
 	 * @since 15.0.0
 	 *
@@ -52,9 +52,9 @@ interface IDashboardManager {
 	 * @param string $userId
 	 *
 	 * @throws DashboardAppNotAvailableException
-	 * @return IWidgetSettings
+	 * @return IWidgetConfig
 	 */
-	public function getWidgetSettings(string $widgetId, string $userId): IWidgetSettings;
+	public function getWidgetConfig(string $widgetId, string $userId): IWidgetConfig;
 
 	/**
 	 * Create push notifications for users.
