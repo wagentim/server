@@ -34,15 +34,23 @@ use OCP\Dashboard\IDashboardWidget;
 
 
 /**
- * @since 15.0.0
- *
  * Interface IWidgetRequest
+ *
+ * WidgetRequest are created by the Dashboard App and used to communicate from
+ * the frontend to the backend.
+ * The object is send to the WidgetClass using IDashboardWidget::requestWidget
+ *
+ * @see IDashboardWidget::requestWidget
+ *
+ * @since 15.0.0
  *
  * @package OCP\Dashboard\Model
  */
 interface IWidgetRequest {
 
 	/**
+	 * Get the widgetId.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -50,6 +58,8 @@ interface IWidgetRequest {
 	public function getWidgetId(): string;
 
 	/**
+	 * Set the widgetId.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $widgetId
@@ -58,7 +68,10 @@ interface IWidgetRequest {
 	 */
 	public function setWidgetId(string $widgetId): IWidgetRequest;
 
+
 	/**
+	 * Get the WidgetClass.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return IDashboardWidget
@@ -66,6 +79,8 @@ interface IWidgetRequest {
 	public function getWidget(): IDashboardWidget;
 
 	/**
+	 * Set the WidgetClass.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param IDashboardWidget $widget
@@ -75,12 +90,14 @@ interface IWidgetRequest {
 	public function setWidget(IDashboardWidget $widget): IWidgetRequest;
 
 	/**
-	 * string to ident the request sent using the API from the front-end
+	 * Get the 'request' string sent by the request from the front-end with
+	 * the format:
 	 *
 	 *  net.requestWidget(
 	 *    {
 	 *     widget: widgetId,
-	 *     request: request
+	 *     request: request,
+	 *     value: value
 	 *    },
 	 *    callback);
 	 *
@@ -91,6 +108,8 @@ interface IWidgetRequest {
 	public function getRequest(): string;
 
 	/**
+	 * Set the request string
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $request
@@ -100,6 +119,31 @@ interface IWidgetRequest {
 	public function setRequest(string $request): IWidgetRequest;
 
 	/**
+	 * Get the 'value' string sent by the request from the front-end.
+	 *
+	 * @see getRequest
+	 *
+	 * @since 15.0.0
+	 *
+	 * @return string
+	 */
+	public function getValue(): string;
+
+	/**
+	 * Set the value string
+	 *
+	 * @since 15.0.0
+	 *
+	 * @param string $request
+	 *
+	 * @return $this
+	 */
+	public function setValue(string $request): IWidgetRequest;
+
+
+	/**
+	 * Returns the result.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -107,7 +151,8 @@ interface IWidgetRequest {
 	public function getResult(): array;
 
 	/**
-	 * set the result array that will be sent to the callback (front-end)
+	 * Set the result array that will be sent from the backend to the
+	 * callback on the front-end
 	 *
 	 * @since 15.0.0
 	 *
@@ -116,6 +161,7 @@ interface IWidgetRequest {
 	 * @return $this
 	 */
 	public function setResult(array $result): IWidgetRequest;
+
 
 	/**
 	 * add a result (as string)

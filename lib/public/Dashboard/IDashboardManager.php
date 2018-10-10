@@ -35,16 +35,21 @@ use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
 use OCP\Dashboard\Model\IWidgetConfig;
 
 /**
- * @since 15.0.0
- *
  * Interface IDashboardManager
+ *
+ * IDashboardManager should be used to manage widget from the backend.
+ * The call can be done from any Service.
+ *
+ * @since 15.0.0
  *
  * @package OCP\Dashboard
  */
 interface IDashboardManager {
 
 	/**
-	 * returns IWidgetConfig for a widgetId and userId.
+	 * returns the OCP\Dashboard\Model\IWidgetConfig for a widgetId and userId.
+	 *
+	 * @see IWidgetConfig
 	 *
 	 * @since 15.0.0
 	 *
@@ -55,6 +60,7 @@ interface IDashboardManager {
 	 * @return IWidgetConfig
 	 */
 	public function getWidgetConfig(string $widgetId, string $userId): IWidgetConfig;
+
 
 	/**
 	 * Create push notifications for users.
@@ -77,6 +83,7 @@ interface IDashboardManager {
 	 */
 	public function createUsersEvent(string $widgetId, array $users, array $payload, string $uniqueId = '');
 
+
 	/**
 	 * Create push notifications for groups. (ie. createUsersEvent())
 	 *
@@ -89,6 +96,7 @@ interface IDashboardManager {
 	 * @throws DashboardAppNotAvailableException
 	 */
 	public function createGroupsEvent(string $widgetId, array $groups, array $payload, string $uniqueId = '');
+
 
 	/**
 	 * Create push notifications for everyone. (ie. createUsersEvent())

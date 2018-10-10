@@ -30,10 +30,17 @@ declare(strict_types=1);
 namespace OCP\Dashboard\Model;
 
 
+use OCP\Dashboard\IDashboardWidget;
+
 /**
- * @since 15.0.0
- *
  * Interface IWidgetTemplate
+ *
+ * A widget must create an IWidgetTemplate object and returns it in the
+ * IDashboardWidget::getWidgetTemplate method.
+ *
+ * @see IDashboardWidget::getWidgetTemplate
+ *
+ * @since 15.0.0
  *
  * @package OCP\Dashboard\Model
  */
@@ -41,6 +48,8 @@ interface IWidgetTemplate {
 
 
 	/**
+	 * Get CSS files to be included when displaying a widget
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -48,7 +57,7 @@ interface IWidgetTemplate {
 	public function getCss(): array;
 
 	/**
-	 * path and name of CSS file
+	 * Add a CSS file to be included when displaying a widget.
 	 *
 	 * @since 15.0.0
 	 *
@@ -59,7 +68,7 @@ interface IWidgetTemplate {
 	public function addCss(string $css): IWidgetTemplate;
 
 	/**
-	 * path and name of CSS files
+	 * Set an array of CSS files to be included when displaying a widget.
 	 *
 	 * @since 15.0.0
 	 *
@@ -71,6 +80,8 @@ interface IWidgetTemplate {
 
 
 	/**
+	 * Get JS files to be included when loading a widget
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -78,7 +89,7 @@ interface IWidgetTemplate {
 	public function getJs(): array;
 
 	/**
-	 * path and name of JS file
+	 * Add a JS file to be included when loading a widget.
 	 *
 	 * @since 15.0.0
 	 *
@@ -89,7 +100,7 @@ interface IWidgetTemplate {
 	public function addJs(string $js): IWidgetTemplate;
 
 	/**
-	 * path and name of JS files in an array
+	 * Set an array of JS files to be included when loading a widget.
 	 *
 	 * @since 15.0.0
 	 *
@@ -101,6 +112,8 @@ interface IWidgetTemplate {
 
 
 	/**
+	 * Get the icon class of the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -108,8 +121,10 @@ interface IWidgetTemplate {
 	public function getIcon(): string;
 
 	/**
-	 * Css class of the icon used by the widget.
-	 * This class must be defined in one of the css used by the widget.
+	 * Set the icon class of the widget.
+	 * This class must be defined in one of the CSS file used by the widget.
+	 *
+	 * @see addCss
 	 *
 	 * @since 15.0.0
 	 *
@@ -121,6 +136,8 @@ interface IWidgetTemplate {
 
 
 	/**
+	 * Get the HTML file that contains the content of the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -128,7 +145,7 @@ interface IWidgetTemplate {
 	public function getContent(): string;
 
 	/**
-	 * path to the HTML Template of the widget,
+	 * Set the HTML file that contains the content of the widget.
 	 *
 	 * @since 15.0.0
 	 *
@@ -140,6 +157,8 @@ interface IWidgetTemplate {
 
 
 	/**
+	 * Get the JS function to be called when loading the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -160,22 +179,34 @@ interface IWidgetTemplate {
 
 
 	/**
+	 * Get all IWidgetSetting defined for the widget.
+	 *
+	 * @see IWidgetSetting
+	 *
 	 * @since 15.0.0
 	 *
-	 * @return array
+	 * @return IWidgetSetting[]
 	 */
 	public function getSettings(): array;
 
 	/**
+	 * Define all IWidgetSetting for the widget.
+	 *
 	 * @since 15.0.0
 	 *
-	 * @param array $settings
+	 * @see IWidgetSetting
+	 *
+	 * @param IWidgetSetting[] $settings
 	 *
 	 * @return IWidgetTemplate
 	 */
 	public function setSettings(array $settings): IWidgetTemplate;
 
 	/**
+	 * Add a IWidgetSetting.
+	 *
+	 * @see IWidgetSetting
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param IWidgetSetting $setting
@@ -185,6 +216,10 @@ interface IWidgetTemplate {
 	public function addSetting(IWidgetSetting $setting): IWidgetTemplate;
 
 	/**
+	 * Get a IWidgetSetting by its name
+	 *
+	 * @see IWidgetSetting::setName
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $key

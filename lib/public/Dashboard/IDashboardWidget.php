@@ -31,15 +31,24 @@ declare(strict_types=1);
 namespace OCP\Dashboard;
 
 
-use OCP\Dashboard\Model\IWidgetRequest;
 use OCP\Dashboard\Model\IWidgetConfig;
+use OCP\Dashboard\Model\IWidgetRequest;
 use OCP\Dashboard\Model\IWidgetSetup;
 use OCP\Dashboard\Model\IWidgetTemplate;
 
 /**
- * @since 15.0.0
- *
  * Interface IDashboardWidget
+ *
+ * This interface is used to create a widget: the widget must implement this
+ * interface and be defined in appinfo/info.xml:
+ *
+ *    <dashboard>
+ *      <widget>OCA\YourApp\YourWidget</widget>
+ *  </dashboard>
+ *
+ * Multiple widget can be defined in the same appinfo/info.xml.
+ *
+ * @since 15.0.0
  *
  * @package OCP\Dashboard
  */
@@ -54,6 +63,7 @@ interface IDashboardWidget {
 	 */
 	public function getId(): string;
 
+
 	/**
 	 * Should returns the [display] name of the widget.
 	 *
@@ -63,9 +73,10 @@ interface IDashboardWidget {
 	 */
 	public function getName(): string;
 
+
 	/**
 	 * Should returns some text describing the widget.
-	 * This description is displayed in the listing of the widget.
+	 * This description is displayed in the listing of the available widgets.
 	 *
 	 * @since 15.0.0
 	 *
@@ -73,9 +84,12 @@ interface IDashboardWidget {
 	 */
 	public function getDescription(): string;
 
+
 	/**
 	 * Must generate and return a IWidgetTemplate that define important stuff
-	 * about the Widget: appId, icon, content, ...
+	 * about the Widget: icon, content, css or javascript.
+	 *
+	 * @see IWidgetTemplate
 	 *
 	 * @since 15.0.0
 	 *
@@ -83,15 +97,19 @@ interface IDashboardWidget {
 	 */
 	public function getWidgetTemplate(): IWidgetTemplate;
 
+
 	/**
 	 * Must create and return a IWidgetSetup containing the general setup of
 	 * the widget
+	 *
+	 * @see IWidgetSetup
 	 *
 	 * @since 15.0.0
 	 *
 	 * @return IWidgetSetup
 	 */
 	public function getWidgetSetup(): IWidgetSetup;
+
 
 	/**
 	 * This method is called when a widget is loaded on the dashboard.
@@ -102,17 +120,22 @@ interface IDashboardWidget {
 	 * - the user already added the widget on his dashboard and he is opening
 	 *   the dashboard app.
 	 *
+	 * @see IWidgetConfig
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param IWidgetConfig $settings
 	 */
 	public function loadWidget(IWidgetConfig $settings);
 
+
 	/**
-	 * method executed when the widget call the net.requestWidget() from
-	 * the Javascript API.
+	 * This method s executed when the widget call the net.requestWidget()
+	 * from the Javascript API.
 	 *
 	 * This is used by the frontend to communicate with the backend.
+	 *
+	 * @see IWidgetRequest
 	 *
 	 * @since 15.0.0
 	 *

@@ -31,9 +31,14 @@ namespace OCP\Dashboard\Model;
 
 
 /**
- * @since 15.0.0
- *
  * Interface IWidgetSetup
+ *
+ * A widget must create an IWidgetSetup object and returns it in the
+ * IDashboardWidget::getWidgetSetup method.
+ *
+ * @see IDashboardWidget::getWidgetSetup
+ *
+ * @since 15.0.0
  *
  * @package OCP\Dashboard\Model
  */
@@ -46,6 +51,14 @@ interface IWidgetSetup {
 
 
 	/**
+	 * Get the defined size for a specific type (min, max, default)
+	 * Returns an array:
+	 * [
+	 *   'width' => width,
+	 *   'height' => height
+	 * ]
+	 *
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $type
@@ -55,6 +68,8 @@ interface IWidgetSetup {
 	public function getSize(string $type): array;
 
 	/**
+	 * Returns all sizes defined for the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -62,6 +77,8 @@ interface IWidgetSetup {
 	public function getSizes(): array;
 
 	/**
+	 * Add a new size to the setup.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $type
@@ -74,6 +91,8 @@ interface IWidgetSetup {
 
 
 	/**
+	 * Returns menu entries.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -81,6 +100,12 @@ interface IWidgetSetup {
 	public function getMenuEntries(): array;
 
 	/**
+	 * Add a menu entry to the widget.
+	 * $function is the Javascript function to be called when clicking the
+	 *           menu entry.
+	 * $icon is the css class of the icon.
+	 * $text is the display name of the menu entry.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
@@ -93,6 +118,11 @@ interface IWidgetSetup {
 
 
 	/**
+	 * Add a delayed job to the widget.
+	 *
+	 * $function is the Javascript function to be called.
+	 * $delay is the time in seconds between each call.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
@@ -103,6 +133,8 @@ interface IWidgetSetup {
 	public function addDelayedJob(string $function, int $delay): IWidgetsetup;
 
 	/**
+	 * Get delayed jobs.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -111,6 +143,8 @@ interface IWidgetSetup {
 
 
 	/**
+	 * Get the push function, called when an event is send to the front-end
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -118,6 +152,9 @@ interface IWidgetSetup {
 	public function getPush(): string;
 
 	/**
+	 * Set the Javascript function to be called when an event is pushed to the
+	 * frontend.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
@@ -128,6 +165,8 @@ interface IWidgetSetup {
 
 
 	/**
+	 * Returns the default settings for a widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -135,6 +174,12 @@ interface IWidgetSetup {
 	public function getDefaultSettings(): array;
 
 	/**
+	 * Set the default settings for a widget.
+	 * This method is used by the Dashboard app, using the settings created
+	 * using IWidgetSetting
+	 *
+	 * @see IWidgetSetting
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
