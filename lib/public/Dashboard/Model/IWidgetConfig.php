@@ -37,6 +37,8 @@ use OCP\Dashboard\IDashboardWidget;
  *
  * This object contains the configuration of a widget for a userId
  *
+ * @see IDashboardWidget::loadWidget
+ *
  * @since 15.0.0
  *
  * @package OCP\Dashboard\Model
@@ -53,17 +55,6 @@ interface IWidgetConfig {
 	 */
 	public function getUserId(): string;
 
-	/**
-	 * Set the userId
-	 *
-	 * @since 15.0.0
-	 *
-	 * @param string $userId
-	 *
-	 * @return $this
-	 */
-	public function setUserId(string $userId): IWidgetConfig;
-
 
 	/**
 	 * Returns the widgetId
@@ -73,15 +64,6 @@ interface IWidgetConfig {
 	 * @return string
 	 */
 	public function getWidgetId(): string;
-
-	/**
-	 * Set the widgetId
-	 *
-	 * @param string $widgetId
-	 *
-	 * @return $this
-	 */
-	public function setWidgetId(string $widgetId): IWidgetConfig;
 
 
 	/**
@@ -101,17 +83,6 @@ interface IWidgetConfig {
 	 * @return array
 	 */
 	public function getPosition(): array;
-
-	/**
-	 * Set the position/size of the widget.
-	 *
-	 * @since 15.0.0
-	 *
-	 * @param array $position
-	 *
-	 * @return $this
-	 */
-	public function setPosition(array $position): IWidgetConfig;
 
 
 	/**
@@ -143,15 +114,6 @@ interface IWidgetConfig {
 	 */
 	public function getSettings(): array;
 
-	/**
-	 * Set settings.
-	 *
-	 * @param array $settings
-	 *
-	 * @return $this
-	 */
-	public function setSettings(array $settings): IWidgetConfig;
-
 
 	/**
 	 * Returns if the widget is enabled/displayed in this user's dashboard.
@@ -162,16 +124,6 @@ interface IWidgetConfig {
 	 */
 	public function isEnabled(): bool;
 
-	/**
-	 * Set the enabled status.
-	 *
-	 * @since 15.0.0
-	 *
-	 * @param bool $enabled
-	 *
-	 * @return $this
-	 */
-	public function setEnabled(bool $enabled): IWidgetConfig;
 
 }
 
