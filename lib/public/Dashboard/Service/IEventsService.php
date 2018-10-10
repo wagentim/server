@@ -49,7 +49,6 @@ interface IEventsService {
 	 * @param array $users
 	 * @param array $payload
 	 * @param string $uniqueId
-	 * @return mixed
 	 */
 	public function createUsersEvent(string $widgetId, array $users, array $payload, string $uniqueId);
 
@@ -60,7 +59,6 @@ interface IEventsService {
 	 * @param array $groups
 	 * @param array $payload
 	 * @param string $uniqueId
-	 * @return mixed
 	 */
 	public function createGroupsEvent(string $widgetId, array $groups, array $payload, string $uniqueId);
 
@@ -70,7 +68,6 @@ interface IEventsService {
 	 * @param string $widgetId
 	 * @param array $payload
 	 * @param string $uniqueId
-	 * @return mixed
 	 */
 	public function createGlobalEvent(string $widgetId, array $payload, string $uniqueId);
 
