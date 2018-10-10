@@ -31,11 +31,12 @@ declare(strict_types=1);
 namespace OC\Dashboard;
 
 
-use Exception;
-use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
 use OCP\App\IAppManager;
+use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
 use OCP\Dashboard\IDashboardManager;
 use OCP\Dashboard\Model\IWidgetConfig;
+use OCP\Dashboard\Service\IEventsService;
+use OCP\Dashboard\Service\IWidgetsService;
 use OCP\IServerContainer;
 
 
@@ -53,6 +54,13 @@ class DashboardManager implements IDashboardManager {
 	/** @var IServerContainer */
 	private $container;
 
+	/** @var IWidgetsService */
+	private $widgetsService;
+
+	/** @var IEventsService */
+	private $eventsService;
+
+
 	/**
 	 * DashboardManager constructor.
 	 *
@@ -66,20 +74,18 @@ class DashboardManager implements IDashboardManager {
 
 
 	/**
-	 * @param string $service
-	 * @return mixed
-	 * @throws DashboardAppNotAvailableException
+	 * @param IEventsService $eventsService
 	 */
-	private function getService(string $service) {
-		if (!$this->appManager->isInstalled('dashboard')) {
-			throw new DashboardAppNotAvailableException('the dashboard app is not installed/available');
-		}
+	public function registerEventsService(IEventsService $eventsService) {
+		$this->eventsService = $eventsService;
+	}
 
-		try {
-			return $this->container->query($service);
-		} catch (Exception $e) {
-			throw new DashboardAppNotAvailableException('issue while querying ' . $service . ': ' . $e->getMessage());
-		}
+
+	/**
+	 * @param IWidgetsService $widgetsService
+	 */
+	public function registerWidgetsService(IWidgetsService $widgetsService) {
+		$this->widgetsService = $widgetsService;
 	}
 
 
@@ -91,9 +97,7 @@ class DashboardManager implements IDashboardManager {
 	 * @throws DashboardAppNotAvailableException
 	 */
 	public function getWidgetConfig(string $widgetId, string $userId): IWidgetConfig {
-		/** @var \OCA\Dashboard\Service\WidgetsService $widgetsService */
-		$widgetsService = $this->getService('\OCA\Dashboard\Service\WidgetsService');
-		return $widgetsService->getWidgetConfig($widgetId, $userId);
+		return $this->getWidgetsService()->getWidgetConfig($widgetId, $userId);
 	}
 
 
@@ -106,9 +110,7 @@ class DashboardManager implements IDashboardManager {
 	 * @throws DashboardAppNotAvailableException
 	 */
 	public function createUsersEvent(string $widgetId, array $users, array $payload, string $uniqueId = '') {
-		/** @var \OCA\Dashboard\Service\EventsService $eventsService */
-		$eventsService = $this->getService('\OCA\Dashboard\Service\EventsService');
-		$eventsService->createUsersEvent($widgetId, $users, $payload, $uniqueId);
+		$this->getEventsService()->createUsersEvent($widgetId, $users, $payload, $uniqueId);
 	}
 
 
@@ -121,9 +123,7 @@ class DashboardManager implements IDashboardManager {
 	 * @throws DashboardAppNotAvailableException
 	 */
 	public function createGroupsEvent(string $widgetId, array $groups, array $payload, string $uniqueId = '') {
-		/** @var \OCA\Dashboard\Service\EventsService $eventsService */
-		$eventsService = $this->getService('\OCA\Dashboard\Service\EventsService');
-		$eventsService->createGroupsEvent($widgetId, $groups, $payload, $uniqueId);
+		$this->getEventsService()->createGroupsEvent($widgetId, $groups, $payload, $uniqueId);
 	}
 
 
@@ -135,9 +135,33 @@ class DashboardManager implements IDashboardManager {
 	 * @throws DashboardAppNotAvailableException
 	 */
 	public function createGlobalEvent(string $widgetId, array $payload, string $uniqueId = '') {
-		/** @var \OCA\Dashboard\Service\EventsService $eventsService */
-		$eventsService = $this->getService('\OCA\Dashboard\Service\EventsService');
-		$eventsService->createGlobalEvent($widgetId, $payload, $uniqueId);
+		$this->getEventsService()->createGlobalEvent($widgetId, $payload, $uniqueId);
+	}
+
+
+	/**
+	 * @return IWidgetsService
+	 * @throws DashboardAppNotAvailableException
+	 */
+	private function getWidgetsService() {
+		if ($this->widgetsService === null) {
+			throw new DashboardAppNotAvailableException('No IWidgetsService registered');
+		}
+
+		return $this->widgetsService;
+	}
+
+
+	/**
+	 * @return IEventsService
+	 * @throws DashboardAppNotAvailableException
+	 */
+	private function getEventsService() {
+		if ($this->eventsService === null) {
+			throw new DashboardAppNotAvailableException('No IEventsService registered');
+		}
+
+		return $this->eventsService;
 	}
 
 }

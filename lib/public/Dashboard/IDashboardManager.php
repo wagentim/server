@@ -33,6 +33,8 @@ namespace OCP\Dashboard;
 
 use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
 use OCP\Dashboard\Model\IWidgetConfig;
+use OCP\Dashboard\Service\IEventsService;
+use OCP\Dashboard\Service\IWidgetsService;
 
 /**
  * Interface IDashboardManager
@@ -45,6 +47,27 @@ use OCP\Dashboard\Model\IWidgetConfig;
  * @package OCP\Dashboard
  */
 interface IDashboardManager {
+
+
+	/**
+	 * Register a IWidgetsService.
+	 *
+	 * @since 15.0.0
+	 *
+	 * @param IWidgetsService $widgetsService
+	 */
+	public function registerWidgetsService(IWidgetsService $widgetsService);
+
+
+	/**
+	 * Register a IEventsService.
+	 *
+	 * @since 15.0.0
+	 *
+	 * @param IEventsService $eventsService
+	 */
+	public function registerEventsService(IEventsService $eventsService);
+
 
 	/**
 	 * returns the OCP\Dashboard\Model\IWidgetConfig for a widgetId and userId.
