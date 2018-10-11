@@ -57,17 +57,6 @@ interface IWidgetRequest {
 	 */
 	public function getWidgetId(): string;
 
-//	/**
-//	 * Set the widgetId.
-//	 *
-//	 * @since 15.0.0
-//	 *
-//	 * @param string $widgetId
-//	 *
-//	 * @return $this;
-//	 */
-//	public function setWidgetId(string $widgetId): IWidgetRequest;
-
 
 	/**
 	 * Get the WidgetClass.
@@ -78,16 +67,6 @@ interface IWidgetRequest {
 	 */
 	public function getWidget(): IDashboardWidget;
 
-//	/**
-//	 * Set the WidgetClass.
-//	 *
-//	 * @since 15.0.0
-//	 *
-//	 * @param IDashboardWidget $widget
-//	 *
-//	 * @return $this
-//	 */
-//	public function setWidget(IDashboardWidget $widget): IWidgetRequest;
 
 	/**
 	 * Get the 'request' string sent by the request from the front-end with
@@ -107,16 +86,6 @@ interface IWidgetRequest {
 	 */
 	public function getRequest(): string;
 
-//	/**
-//	 * Set the request string
-//	 *
-//	 * @since 15.0.0
-//	 *
-//	 * @param string $request
-//	 *
-//	 * @return $this
-//	 */
-//	public function setRequest(string $request): IWidgetRequest;
 
 	/**
 	 * Get the 'value' string sent by the request from the front-end.
@@ -129,17 +98,6 @@ interface IWidgetRequest {
 	 */
 	public function getValue(): string;
 
-//	/**
-//	 * Set the value string
-//	 *
-//	 * @since 15.0.0
-//	 *
-//	 * @param string $request
-//	 *
-//	 * @return $this
-//	 */
-//	public function setValue(string $request): IWidgetRequest;
-
 
 	/**
 	 * Returns the result.
@@ -149,18 +107,6 @@ interface IWidgetRequest {
 	 * @return array
 	 */
 	public function getResult(): array;
-
-//	/**
-//	 * Set the result array that will be sent from the backend to the
-//	 * callback on the front-end
-//	 *
-//	 * @since 15.0.0
-//	 *
-//	 * @param array $result
-//	 *
-//	 * @return $this
-//	 */
-//	public function setResult(array $result): IWidgetRequest;
 
 
 	/**

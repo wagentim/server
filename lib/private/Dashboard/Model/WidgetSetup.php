@@ -31,17 +31,26 @@ namespace OC\Dashboard\Model;
 
 
 use JsonSerializable;
-use OCP\Dashboard\Model\IWidgetSetup;
 
 
 /**
- * @since 15.0.0
- *
  * Interface WidgetSetup
+ *
+ * A widget must create an WidgetSetup object and returns it in the
+ * IDashboardWidget::getWidgetSetup method.
+ *
+ * @see IDashboardWidget::getWidgetSetup
+ *
+ * @since 15.0.0
  *
  * @package OC\Dashboard\Model
  */
-class WidgetSetup implements IWidgetSetup, JsonSerializable {
+class WidgetSetup implements JsonSerializable {
+
+
+	const SIZE_TYPE_MIN = 'min';
+	const SIZE_TYPE_MAX = 'max';
+	const SIZE_TYPE_DEFAULT = 'default';
 
 
 	/** @var array */
@@ -61,6 +70,14 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 
 
 	/**
+	 * Get the defined size for a specific type (min, max, default)
+	 * Returns an array:
+	 * [
+	 *   'width' => width,
+	 *   'height' => height
+	 * ]
+	 *
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $type
@@ -76,6 +93,8 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 	}
 
 	/**
+	 * Returns all sizes defined for the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -85,15 +104,17 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 	}
 
 	/**
+	 * Add a new size to the setup.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $type
 	 * @param int $width
 	 * @param int $height
 	 *
-	 * @return IWidgetSetup
+	 * @return WidgetSetup
 	 */
-	public function addSize(string $type, int $width, int $height): IWidgetsetup {
+	public function addSize(string $type, int $width, int $height): WidgetSetup {
 		$this->sizes[$type] = [
 			'width' => $width,
 			'height' => $height
@@ -103,6 +124,8 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 	}
 
 	/**
+	 * Returns menu entries.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -112,15 +135,21 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 	}
 
 	/**
+	 * Add a menu entry to the widget.
+	 * $function is the Javascript function to be called when clicking the
+	 *           menu entry.
+	 * $icon is the css class of the icon.
+	 * $text is the display name of the menu entry.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
 	 * @param string $icon
 	 * @param string $text
 	 *
-	 * @return IWidgetSetup
+	 * @return WidgetSetup
 	 */
-	public function addMenuEntry(string $function, string $icon, string $text): IWidgetSetup {
+	public function addMenuEntry(string $function, string $icon, string $text): WidgetSetup {
 		$this->menus[] = [
 			'function' => $function,
 			'icon' => $icon,
@@ -132,14 +161,19 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 
 
 	/**
+	 * Add a delayed job to the widget.
+	 *
+	 * $function is the Javascript function to be called.
+	 * $delay is the time in seconds between each call.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
 	 * @param int $delay
 	 *
-	 * @return IWidgetSetup
+	 * @return WidgetSetup
 	 */
-	public function addDelayedJob(string $function, int $delay): IWidgetsetup {
+	public function addDelayedJob(string $function, int $delay): WidgetSetup {
 		$this->jobs[] = [
 			'function' => $function,
 			'delay' => $delay
@@ -149,6 +183,8 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 	}
 
 	/**
+	 * Get delayed jobs.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -159,6 +195,8 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 
 
 	/**
+	 * Get the push function, called when an event is send to the front-end
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -168,13 +206,16 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 	}
 
 	/**
+	 * Set the Javascript function to be called when an event is pushed to the
+	 * frontend.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
 	 *
-	 * @return IWidgetSetup
+	 * @return WidgetSetup
 	 */
-	public function setPush(string $function): IWidgetSetup {
+	public function setPush(string $function): WidgetSetup {
 		$this->push = $function;
 
 		return $this;
@@ -182,26 +223,35 @@ class WidgetSetup implements IWidgetSetup, JsonSerializable {
 
 
 	/**
+	 * Returns the default settings for a widget.
+	 *
 	 * @since 15.0.0
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function getDefaultSettings(): array {
 		return $this->settings;
 	}
 
 	/**
+	 * Set the default settings for a widget.
+	 * This method is used by the Dashboard app, using the settings created
+	 * using WidgetSetting
+	 *
+	 * @see WidgetSetting
+	 *
 	 * @since 15.0.0
 	 *
-	 * @param string $function
+	 * @param array $settings
 	 *
-	 * @return IWidgetSetup
+	 * @return WidgetSetup
 	 */
-	public function setDefaultSettings(array $settings): IWidgetSetup {
+	public function setDefaultSettings(array $settings): WidgetSetup {
 		$this->settings = $settings;
 
 		return $this;
 	}
+
 
 	/**
 	 * @return array

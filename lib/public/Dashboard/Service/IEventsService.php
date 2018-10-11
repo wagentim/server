@@ -36,13 +36,19 @@ use OCP\Dashboard\IDashboardManager;
 /**
  * Interface IEventsService
  *
+ * The Service is provided by the Dashboard app. The method in this interface
+ * are used by the IDashboardManager when creating push event.
+ *
  * @since 15.0.0
  *
  * @package OCP\Dashboard\Service
  */
 interface IEventsService {
 
+
 	/**
+	 * Create an event for a widget and an array of users.
+	 *
 	 * @see IDashboardManager::createUsersEvent
 	 *
 	 * @param string $widgetId
@@ -52,7 +58,10 @@ interface IEventsService {
 	 */
 	public function createUsersEvent(string $widgetId, array $users, array $payload, string $uniqueId);
 
+
 	/**
+	 * Create an event for a widget and an array of groups.
+	 *
 	 * @see IDashboardManager::createGroupsEvent
 	 *
 	 * @param string $widgetId
@@ -62,7 +71,10 @@ interface IEventsService {
 	 */
 	public function createGroupsEvent(string $widgetId, array $groups, array $payload, string $uniqueId);
 
+
 	/**
+	 * Create a global event for all users that use a specific widget.
+	 *
 	 * @see IDashboardManager::createGlobalEvent
 	 *
 	 * @param string $widgetId
@@ -70,6 +82,7 @@ interface IEventsService {
 	 * @param string $uniqueId
 	 */
 	public function createGlobalEvent(string $widgetId, array $payload, string $uniqueId);
+
 
 }
 

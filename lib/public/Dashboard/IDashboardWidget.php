@@ -31,10 +31,9 @@ declare(strict_types=1);
 namespace OCP\Dashboard;
 
 
+use OC\Dashboard\Model\WidgetSetup;
 use OCP\Dashboard\Model\IWidgetConfig;
 use OCP\Dashboard\Model\IWidgetRequest;
-use OCP\Dashboard\Model\IWidgetSetup;
-use OCP\Dashboard\Model\IWidgetTemplate;
 
 /**
  * Interface IDashboardWidget
@@ -86,29 +85,29 @@ interface IDashboardWidget {
 
 
 	/**
-	 * Must generate and return a IWidgetTemplate that define important stuff
+	 * Must generate and return a WidgetTemplate that define important stuff
 	 * about the Widget: icon, content, css or javascript.
 	 *
-	 * @see IWidgetTemplate
+	 * @see WidgetTemplate
 	 *
 	 * @since 15.0.0
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function getWidgetTemplate(): IWidgetTemplate;
+	public function getWidgetTemplate(): WidgetTemplate;
 
 
 	/**
-	 * Must create and return a IWidgetSetup containing the general setup of
+	 * Must create and return a WidgetSetup containing the general setup of
 	 * the widget
 	 *
-	 * @see IWidgetSetup
+	 * @see WidgetSetup
 	 *
 	 * @since 15.0.0
 	 *
-	 * @return IWidgetSetup
+	 * @return WidgetSetup
 	 */
-	public function getWidgetSetup(): IWidgetSetup;
+	public function getWidgetSetup(): WidgetSetup;
 
 
 	/**

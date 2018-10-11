@@ -31,18 +31,21 @@ namespace OC\Dashboard\Model;
 
 
 use JsonSerializable;
-use OCP\Dashboard\Model\IWidgetSetting;
-use OCP\Dashboard\Model\IWidgetTemplate;
 
 
 /**
- * @since 15.0.0
+ * Interface WidgetTemplate
  *
- * Interface WidgetSetup
+ * A widget must create an WidgetTemplate object and returns it in the
+ * IDashboardWidget::getWidgetTemplate method.
+ *
+ * @see IDashboardWidget::getWidgetTemplate
+ *
+ * @since 15.0.0
  *
  * @package OC\Dashboard\Model
  */
-class WidgetTemplate implements IWidgetTemplate, JsonSerializable {
+class WidgetTemplate implements JsonSerializable {
 
 
 	/** @var string */
@@ -60,11 +63,13 @@ class WidgetTemplate implements IWidgetTemplate, JsonSerializable {
 	/** @var string */
 	private $function = '';
 
-	/** @var IWidgetSetting[] */
+	/** @var WidgetSetting[] */
 	private $settings = [];
 
 
 	/**
+	 * Get the icon class of the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -74,19 +79,26 @@ class WidgetTemplate implements IWidgetTemplate, JsonSerializable {
 	}
 
 	/**
+	 * Set the icon class of the widget.
+	 * This class must be defined in one of the CSS file used by the widget.
+	 *
+	 * @see addCss
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $icon
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function setIcon(string $icon): IWidgetTemplate {
+	public function setIcon(string $icon): WidgetTemplate {
 		$this->icon = $icon;
 
 		return $this;
 	}
 
 	/**
+	 * Get CSS files to be included when displaying a widget
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -102,28 +114,32 @@ class WidgetTemplate implements IWidgetTemplate, JsonSerializable {
 	 *
 	 * @param array $css
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function setCss(array $css): IWidgetTemplate {
+	public function setCss(array $css): WidgetTemplate {
 		$this->css = $css;
 
 		return $this;
 	}
 
 	/**
+	 * Add a CSS file to be included when displaying a widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $css
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function addCss(string $css): IWidgetTemplate {
+	public function addCss(string $css): WidgetTemplate {
 		$this->css[] = $css;
 
 		return $this;
 	}
 
 	/**
+	 * Get JS files to be included when loading a widget
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return array
@@ -133,34 +149,38 @@ class WidgetTemplate implements IWidgetTemplate, JsonSerializable {
 	}
 
 	/**
-	 * path and name of JS files in an array
+	 * Set an array of JS files to be included when loading a widget.
 	 *
 	 * @since 15.0.0
 	 *
 	 * @param array $js
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function setJs(array $js): IWidgetTemplate {
+	public function setJs(array $js): WidgetTemplate {
 		$this->js = $js;
 
 		return $this;
 	}
 
 	/**
+	 * Add a JS file to be included when loading a widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $js
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function addJs(string $js): IWidgetTemplate {
+	public function addJs(string $js): WidgetTemplate {
 		$this->js[] = $js;
 
 		return $this;
 	}
 
 	/**
+	 * Get the HTML file that contains the content of the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -170,19 +190,23 @@ class WidgetTemplate implements IWidgetTemplate, JsonSerializable {
 	}
 
 	/**
+	 * Set the HTML file that contains the content of the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $content
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function setContent(string $content): IWidgetTemplate {
+	public function setContent(string $content): WidgetTemplate {
 		$this->content = $content;
 
 		return $this;
 	}
 
 	/**
+	 * Get the JS function to be called when loading the widget.
+	 *
 	 * @since 15.0.0
 	 *
 	 * @return string
@@ -192,53 +216,80 @@ class WidgetTemplate implements IWidgetTemplate, JsonSerializable {
 	}
 
 	/**
+	 * JavaScript function to be called when loading the widget on the
+	 * dashboard
+	 *
 	 * @since 15.0.0
 	 *
 	 * @param string $function
 	 *
-	 * @return IWidgetTemplate
+	 * @return WidgetTemplate
 	 */
-	public function setInitFunction(string $function): IWidgetTemplate {
+	public function setInitFunction(string $function): WidgetTemplate {
 		$this->function = $function;
 
 		return $this;
 	}
 
 	/**
-	 * @return IWidgetSetting[]
+	 * Get all WidgetSetting defined for the widget.
+	 *
+	 * @see WidgetSetting
+	 *
+	 * @since 15.0.0
+	 *
+	 * @return WidgetSetting[]
 	 */
 	public function getSettings(): array {
 		return $this->settings;
 	}
 
 	/**
-	 * @param IWidgetSetting[] $settings
+	 * Define all WidgetSetting for the widget.
 	 *
-	 * @return IWidgetTemplate
+	 * @since 15.0.0
+	 *
+	 * @see WidgetSetting
+	 *
+	 * @param WidgetSetting[] $settings
+	 *
+	 * @return WidgetTemplate
 	 */
-	public function setSettings(array $settings): IWidgetTemplate {
+	public function setSettings(array $settings): WidgetTemplate {
 		$this->settings = $settings;
 
 		return $this;
 	}
 
 	/**
-	 * @param IWidgetSetting $setting
+	 * Add a WidgetSetting.
 	 *
-	 * @return $this
+	 * @see WidgetSetting
+	 *
+	 * @since 15.0.0
+	 *
+	 * @param WidgetSetting $setting
+	 *
+	 * @return WidgetTemplate
 	 */
-	public function addSetting(IWidgetSetting $setting): IWidgetTemplate {
+	public function addSetting(WidgetSetting $setting): WidgetTemplate {
 		$this->settings[] = $setting;
 
 		return $this;
 	}
 
 	/**
+	 * Get a WidgetSetting by its name
+	 *
+	 * @see WidgetSetting::setName
+	 *
+	 * @since 15.0.0
+	 *
 	 * @param string $key
 	 *
-	 * @return IWidgetSetting
+	 * @return WidgetSetting
 	 */
-	public function getSetting(string $key): IWidgetSetting {
+	public function getSetting(string $key): WidgetSetting {
 		if (!array_key_exists($key, $this->settings)) {
 			return null;
 		}
