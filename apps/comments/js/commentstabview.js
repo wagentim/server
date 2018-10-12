@@ -412,6 +412,9 @@
 					return;
 				}
 				var mention = '@' + mentions[i].mentionId;
+				if (mentions[i].mentionId.indexOf(' ') !== -1) {
+					mention = '@"' + mentions[i].mentionId + '"';
+				}
 
 				// escape possible regex characters in the name
 				mention = mention.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -598,9 +601,14 @@
 			var $comment = $el.clone();
 
 			$comment.find('.avatar-name-wrapper').each(function () {
-				var $this = $(this);
-				var $inserted = $this.parent();
-				$inserted.html('@' + $this.find('.avatar').data('username'));
+				var $this = $(this),
+					$inserted = $this.parent(),
+					userId = $this.find('.avatar').data('username');
+				if (userId.indexOf(' ') !== -1) {
+					$inserted.html('@"' + userId + '"');
+				} else {
+					$inserted.html('@' + userId);
+				}
 			});
 
 			$comment.html(OCP.Comments.richToPlain($comment.html()));
