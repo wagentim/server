@@ -28,6 +28,8 @@
 						 :multiple="true"
 						 :searchable="true"
 						 @search-change="searchGroup"
+						 :loading="loadingGroups"
+						 :show-no-options="false"
 						 :close-on-select="false">
 			</Multiselect>
 		</p>
@@ -40,6 +42,10 @@
 						 :placeholder="t('settings', 'Excluded groups')"
 						 :disabled="loading"
 						 :multiple="true"
+						 :searchable="true"
+						 @search-change="searchGroup"
+						 :loading="loadingGroups"
+						 :show-no-options="false"
 						 :close-on-select="false">
 			</Multiselect>
 		</p>
@@ -72,6 +78,7 @@
 				},
 				loading: false,
 				groups: [],
+				loadingGroups: false,
 			}
 		},
 		mounted () {
@@ -94,11 +101,13 @@
 		},
 		methods: {
 			searchGroup: _.debounce(function (query) {
+				this.loadingGroups = true
 				Axios.get(OC.linkToOCS(`cloud/groups?offset=0&search=${encodeURIComponent(query)}&limit=20`, 2))
 					.then(res => res.data.ocs)
 					.then(ocs => ocs.data.groups)
 					.then(groups => this.groups = _.sortedUniq(this.groups.concat(groups)))
 					.catch(err => console.error('could not search groups', err))
+					.then(() => this.loadingGroups = false)
 			}, 500),
 
 			saveChanges () {
