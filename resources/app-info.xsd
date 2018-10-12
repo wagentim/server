@@ -59,6 +59,8 @@
                             maxOccurs="1" />
                 <xs:element name="sabre" type="sabre" minOccurs="0"
                             maxOccurs="1" />
+                <xs:element name="versions" type="versions" minOccurs="0"
+                            maxOccurs="1" />
             </xs:sequence>
         </xs:complexType>
         <xs:unique name="uniqueNameL10n">
@@ -642,6 +644,21 @@
             <xs:element name="command" type="php-class" minOccurs="1"
                         maxOccurs="unbounded"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="versions">
+        <xs:sequence>
+            <xs:element name="backend" type="versions-backend" minOccurs="1"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="versions-backend">
+        <xs:simpleContent>
+            <xs:extension base="php-class">
+                <xs:attribute name="for" type="php-class" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
 
     <xs:simpleType name="php-class">
