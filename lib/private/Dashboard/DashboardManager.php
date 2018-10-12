@@ -31,13 +31,11 @@ declare(strict_types=1);
 namespace OC\Dashboard;
 
 
-use OCP\App\IAppManager;
 use OCP\Dashboard\Exceptions\DashboardAppNotAvailableException;
 use OCP\Dashboard\IDashboardManager;
 use OCP\Dashboard\Model\IWidgetConfig;
 use OCP\Dashboard\Service\IEventsService;
 use OCP\Dashboard\Service\IWidgetsService;
-use OCP\IServerContainer;
 
 
 /**
@@ -48,29 +46,11 @@ use OCP\IServerContainer;
 class DashboardManager implements IDashboardManager {
 
 
-	/** @var IAppManager */
-	private $appManager;
-
-	/** @var IServerContainer */
-	private $container;
-
 	/** @var IWidgetsService */
 	private $widgetsService;
 
 	/** @var IEventsService */
 	private $eventsService;
-
-
-	/**
-	 * DashboardManager constructor.
-	 *
-	 * @param IAppManager $appManager
-	 * @param IServerContainer $container
-	 */
-	public function __construct(IAppManager $appManager, IServerContainer $container) {
-		$this->appManager = $appManager;
-		$this->container = $container;
-	}
 
 
 	/**
