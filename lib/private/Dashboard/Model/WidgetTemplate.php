@@ -45,7 +45,7 @@ use JsonSerializable;
  *
  * @package OC\Dashboard\Model
  */
-class WidgetTemplate implements JsonSerializable {
+final class WidgetTemplate implements JsonSerializable {
 
 
 	/** @var string */

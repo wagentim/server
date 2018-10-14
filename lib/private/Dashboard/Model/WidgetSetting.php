@@ -52,7 +52,7 @@ use JsonSerializable;
  *
  * @package OC\Dashboard\Model
  */
-class WidgetSetting implements JsonSerializable {
+final class WidgetSetting implements JsonSerializable {
 
 
 	const TYPE_INPUT = 'input';

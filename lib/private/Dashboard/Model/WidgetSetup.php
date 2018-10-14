@@ -45,7 +45,7 @@ use JsonSerializable;
  *
  * @package OC\Dashboard\Model
  */
-class WidgetSetup implements JsonSerializable {
+final class WidgetSetup implements JsonSerializable {
 
 
 	const SIZE_TYPE_MIN = 'min';
