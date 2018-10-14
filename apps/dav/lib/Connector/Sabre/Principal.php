@@ -250,6 +250,23 @@ class Principal implements BackendInterface {
 					}, []);
 					break;
 
+				case '{DAV:}displayname':
+					$users = $this->userManager->searchDisplayName($value);
+
+					$results[] = array_reduce($users, function(array $carry, IUser $user) use ($restrictGroups) {
+						// is sharing restricted to groups only?
+						if ($restrictGroups !== false) {
+							$userGroups = $this->groupManager->getUserGroupIds($user);
+							if (count(array_intersect($userGroups, $restrictGroups)) === 0) {
+								return $carry;
+							}
+						}
+
+						$carry[] = $this->principalPrefix . '/' . $user->getUID();
+						return $carry;
+					}, []);
+					break;
+
 				default:
 					$results[] = [];
 					break;
@@ -356,6 +373,7 @@ class Principal implements BackendInterface {
 		$principal = [
 				'uri' => $this->principalPrefix . '/' . $userId,
 				'{DAV:}displayname' => is_null($displayName) ? $userId : $displayName,
+				'{urn:ietf:params:xml:ns:caldav}calendar-user-type' => 'INDIVIDUAL',
 		];
 
 		$email = $user->getEMailAddress();
