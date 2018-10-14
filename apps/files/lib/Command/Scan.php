@@ -77,18 +77,6 @@ class Scan extends Base {
 				'limit rescan to this path, eg. --path="/alice/files/Music", the user_id is determined by the path and the user_id parameter and --all are ignored'
 			)
 			->addOption(
-				'quiet',
-				'q',
-				InputOption::VALUE_NONE,
-				'suppress any output'
-			)
-			->addOption(
-				'verbose',
-				'-v|vv|vvv',
-				InputOption::VALUE_NONE,
-				'verbose the output'
-			)
-			->addOption(
 				'all',
 				null,
 				InputOption::VALUE_NONE,
